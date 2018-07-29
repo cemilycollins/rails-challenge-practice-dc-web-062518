@@ -1,0 +1,18 @@
+<h1>Welcome to this building's page</h1>
+
+<p>Name: <%= @building.name %></p>
+<p>Address: <%= @building.address %></p>
+<p>Country: <%= @building.country %></p>
+<p>Number of Floors: <%= @building.number_of_floors %></p>
+<p>Rent per floor: <%= @building.rent_per_floor %></p>
+
+<p>Companies with offices here:</p>
+<ul>
+<% @building.companies.each do |company| %>
+  <li><%= company.name %></li>
+<% end %>
+</ul>
+
+<p>Total Revenue: <%= @building.total_revenue %></p>
+
+<p><%= link_to "Update this building's info", edit_building_path %></p>

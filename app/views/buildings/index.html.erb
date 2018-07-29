@@ -1,0 +1,13 @@
+<h1>Buildings</h1>
+
+<ul>
+  <% @buildings.each do |building| %>
+  <li><%= link_to building.name, building_path(building) %></li>
+  <p>Available floors for this building: </p>
+    <% building.available_floors_array.each do |floor| %>
+      <ul>
+      <li>Floor #<%= floor %></li>
+      </ul>
+    <% end %>
+  <% end %>
+</ul>
