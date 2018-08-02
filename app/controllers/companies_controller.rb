@@ -1,6 +1,23 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:edit, :update, :show]
 
+  def new
+    @company = Company.new
+    @company.offices.build(company_id: @company.id)
+  end
+
+  def create
+    @company = Company.new(company_params)
+    if @company.save
+      @company.offices.each do |office|
+        office.update(company_id: @company.id)
+      end
+      redirect_to company_path(@company)
+    else
+      render :new
+    end
+  end
+
   def edit
   end
 
@@ -13,7 +30,7 @@ class CompaniesController < ApplicationController
   end
 
   def index
-    @companys = Company.all
+    @companies = Company.all
   end
 
   def show
@@ -26,7 +43,18 @@ class CompaniesController < ApplicationController
     end
 
     def company_params
-      params.require(:company).permit(:name, :country, :address, :rent_per_floor, :number_of_floors)
+      params.require(:company).permit(:name,
+        offices_attributes: [
+          :building_id,
+          :floor,
+          :company_id
+        ],
+        employees_attributes: [
+          :name,
+          :title,
+          :office_id,
+          :company_id
+        ])
     end
 
 end

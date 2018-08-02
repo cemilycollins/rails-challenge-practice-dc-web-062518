@@ -10,6 +10,5 @@ class Office < ApplicationRecord
   has_many :employees, through: :companies
 
   validates :building_id, presence: true
-  validates :company_id, presence: true
-  validates :floor, presence: true, uniqueness: true
+  validates :floor, presence: true, uniqueness: true, numericality: true
 end

@@ -1,16 +1,21 @@
-<h1>Update form</h1>
+<h1>Put in information about your company</h1>
 
 <%= form_for @company do |f| %>
 <%= f.label :name %>
 <%= f.text_field :name %><br>
-<%= f.fields_for :address %>
-<%= f.text_field :address %><br>
-<%= f.label :country %>
-<%= f.text_field :country %><br>
-<%= f.label :number_of_floors %>
-<%= f.text_field :number_of_floors %><br>
-<%= f.label :rent_per_floor %>
-<%= f.text_field :rent_per_floor %><br>
+<%= f.fields_for :offices do |t|%>
+  <%= t.label :building_id %>
+  <%= t.collection_select :building_id, Building.all, :id, :name %><br>
+  <%= t.label :floor %>
+  <%= t.text_field :floor, list: "floors_autocomplete" %>
+  <datalist id="floors_autocomplete">
+    <% Building.all.each do |building| %>
+      <% building.available_floors_array.each do |floor_number| %>
+      <option value="<%= building.name + " - Floor " + floor_number.to_s %>" >
+      <% end %>
+    <% end %>
+  </datalist><br>
+  <% end %>
 <%= f.submit %>
 <% end %>
 

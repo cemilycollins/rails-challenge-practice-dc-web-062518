@@ -1,0 +1,30 @@
+<h1>Welcome to your company page, <%= @company.name %></h1>
+
+<h2>Total Rent: <%= @company.total_rent %></h2>
+
+<h2>Here are all of the employees</h2>
+
+<% @company.employees.each do |employee| %>
+  <%= employee.name + " - " + employee.title %>
+  <%= form_for employee, method: :delete do |f| %>
+    <%= f.submit "Delete this employee record" %>
+  <% end %><br>
+<% end %>
+
+<h2>Add an employee</h2>
+
+<%= form_for @company do |f| %>
+  <%= f.fields_for @company.employees.build do |t| %>
+    <%= t.label :name %>
+    <%= t.text_field :name %><br>
+    <%= t.label :title %>
+    <%= t.text_field :title %><br>
+    <label>Office:</label>
+    <select name ="office_id">
+      <% @company.offices.each do |office| %>
+        <option value="<%= office.id %>"><%= office.building.name + " - " + office.floor.to_s %></option>
+      <% end %>
+    </select>
+    <%= f.submit "Add Employee"%>
+  <% end %>
+<% end %>

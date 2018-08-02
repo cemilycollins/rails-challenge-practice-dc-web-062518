@@ -4,6 +4,7 @@ class Employee < ApplicationRecord
   # t.integer :company_id
 
   belongs_to :company
+  has_one :office, through: :company
 
   validates :name, presence: true
   validates :title, presence: true
